@@ -70,12 +70,12 @@ var App = React.createClass({
 				<form className="pure-form">
 					<input type="text" onChange={this.handleChange}></input>
 				</form>
-				<div>Results: {filtered_data.length}</div>
+				<div>Results: {filtered_data.length}{filtered_data.length > 20 ? " (only showing 20)" : ""}</div>
 				<table className="pure-table">
 					<thead><tr>
 						<td>Lexeme</td>
 						<td>Gloss</td>
-						<td>Frequency</td>
+						<td>Occurrences*</td>
 					</tr></thead>
 					<tbody>
 						{top_results.map(function(data, i){
@@ -83,6 +83,12 @@ var App = React.createClass({
 						})}
 					</tbody>
 				</table>
+				<span style={{
+						fontStyle: "italic",
+						fontSize: "90%"
+					}}>
+					* occurrences of this specific sense of the root according to etcbc data
+				</span>
 			</div>
 		);
 	}
