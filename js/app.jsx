@@ -53,7 +53,7 @@ var App = React.createClass({
 		{
 			var that_filter = this.state.filter;
 			filtered_data = (this.state.filter === "") ? [] : this.state.lexeme_data.filter(function(x){
-				return x["gloss"].search(that_filter) !== -1;
+				return x["gloss"].search(new RegExp(that_filter, "i")) !== -1;
 			});
 		}
 		var top_results = filtered_data.slice(0, 20);
