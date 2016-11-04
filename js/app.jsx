@@ -2,7 +2,9 @@ var LexemeRow = React.createClass({
 	render: function() {
 		return (
 			<tr>
-				<td style={{fontFamily: 'SBL Hebrew', fontSize: '130%'}}>{this.props.lex.lexeme}</td>
+				<td style={{fontFamily: 'SBL Hebrew', fontSize: '130%'}}>
+					{this.props.lex.lexeme.replace(/[\/\[=]/g,"")}
+				</td>
 				<td>{this.props.lex.gloss}</td>
 				<td>{this.props.lex.frequency}</td>
 			</tr>
@@ -43,21 +45,19 @@ var App = React.createClass({
 				}
 			})();
 			var normalised_filter = replaceFinals(this.state.filter)
-			filtered_data = (this.state.filter === "") ? [""] : this.state.lexeme_data.filter(function(x){
+			filtered_data = (this.state.filter === "") ? [] : this.state.lexeme_data.filter(function(x){
 				return x["searchable_lexeme"].search(normalised_filter) !== -1;
 			});
 		}
 		else
 		{
 			var that_filter = this.state.filter;
-			filtered_data = (this.state.filter === "") ? [""] : this.state.lexeme_data.filter(function(x){
+			filtered_data = (this.state.filter === "") ? [] : this.state.lexeme_data.filter(function(x){
 				return x["gloss"].search(that_filter) !== -1;
 			});
 		}
 		var top_results = filtered_data.slice(0, 20);
 		var sorted_filtered_data = top_results.sort(function(a, b){
-			console.log(a["frequency"])
-			console.log(b["frequency"])
 			if (+a["frequency"] > +b["frequency"])
 				return -1;
 			if (+a["frequency"] < +b["frequency"])
@@ -70,11 +70,11 @@ var App = React.createClass({
 				<input type="text" onChange={this.handleChange}></input>
 				<div>Results: {filtered_data.length}</div>
 				<table className="filteredResults">
-					<thead>
+					<thead><tr>
 						<td>Lexeme</td>
 						<td>Gloss</td>
 						<td>Frequency</td>
-					</thead>
+					</tr></thead>
 					<tbody>
 						{top_results.map(function(data, i){
 							return <LexemeRow key={i} lex={data}></LexemeRow>
