@@ -67,9 +67,11 @@ var App = React.createClass({
 		return (
 			<div>
 				<h1>Find Hebrew Lexemes</h1>
-				<input type="text" onChange={this.handleChange}></input>
+				<form className="pure-form">
+					<input type="text" onChange={this.handleChange}></input>
+				</form>
 				<div>Results: {filtered_data.length}</div>
-				<table className="filteredResults">
+				<table className="pure-table">
 					<thead><tr>
 						<td>Lexeme</td>
 						<td>Gloss</td>
@@ -81,7 +83,6 @@ var App = React.createClass({
 						})}
 					</tbody>
 				</table>
-
 			</div>
 		);
 	}
